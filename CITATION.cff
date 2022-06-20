@@ -1,0 +1,105 @@
+# -----------------------------------------------------------
+# CITATION file created with {cffr} R package, v0.2.2
+# See also: https://docs.ropensci.org/cffr/
+# -----------------------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "mapiso" in publications use:'
+type: software
+license: GPL-3.0-or-later
+title: 'mapiso: Create isopleth sf object from raster or regular grids'
+version: 0.1.0
+abstract: Create isopleth sf object from raster or regular grids.
+authors:
+- family-names: Giraud
+  given-names: Timothée
+  email: timothee.giraud@cnrs.fr
+  orcid: https://orcid.org/0000-0002-1932-3323
+preferred-citation:
+  type: manual
+  title: 'mapiso: Create isopleth sf object from raster or regular grids'
+  authors:
+  - family-names: Giraud
+    given-names: Timothée
+    email: timothee.giraud@cnrs.fr
+    orcid: https://orcid.org/0000-0002-1932-3323
+  version: 0.1.0
+  abstract: Create isopleth sf object from raster or regular grids.
+  repository-code: https://github.com/rcarto/mapiso/issues/
+  url: https://github.com/rcarto/mapiso
+  contact:
+  - family-names: Giraud
+    given-names: Timothée
+    email: timothee.giraud@cnrs.fr
+    orcid: https://orcid.org/0000-0002-1932-3323
+  license: GPL-3.0-or-later
+  year: '2022'
+repository-code: https://github.com/rcarto/mapiso/issues/
+url: https://github.com/rcarto/mapiso
+contact:
+- family-names: Giraud
+  given-names: Timothée
+  email: timothee.giraud@cnrs.fr
+  orcid: https://orcid.org/0000-0002-1932-3323
+references:
+- type: software
+  title: 'R: A Language and Environment for Statistical Computing'
+  notes: Depends
+  authors:
+  - name: R Core Team
+  location:
+    name: Vienna, Austria
+  year: '2022'
+  url: https://www.R-project.org/
+  institution:
+    name: R Foundation for Statistical Computing
+  version: '>= 3.6.0'
+- type: software
+  title: sf
+  abstract: 'sf: Simple Features for R'
+  notes: Imports
+  authors:
+  - family-names: Pebesma
+    given-names: Edzer
+    email: edzer.pebesma@uni-muenster.de
+    orcid: https://orcid.org/0000-0001-8049-7069
+  year: '2022'
+  url: https://CRAN.R-project.org/package=sf
+- type: software
+  title: terra
+  abstract: 'terra: Spatial Data Analysis'
+  notes: Imports
+  authors:
+  - family-names: Hijmans
+    given-names: Robert J.
+    email: r.hijmans@gmail.com
+    orcid: https://orcid.org/0000-0001-5872-2872
+  year: '2022'
+  url: https://CRAN.R-project.org/package=terra
+- type: software
+  title: isoband
+  abstract: 'isoband: Generate Isolines and Isobands from Regularly Spaced Elevation
+    Grids'
+  notes: Imports
+  authors:
+  - family-names: Wilke
+    given-names: Claus O.
+    email: wilke@austin.utexas.edu
+    orcid: https://orcid.org/0000-0002-7470-9261
+  - family-names: Pedersen
+    given-names: Thomas Lin
+    email: thomasp85@gmail.com
+    orcid: https://orcid.org/0000-0002-5147-4711
+  year: '2022'
+  url: https://CRAN.R-project.org/package=isoband
+- type: software
+  title: mapsf
+  abstract: 'mapsf: Thematic Cartography'
+  notes: Suggests
+  authors:
+  - family-names: Giraud
+    given-names: Timothée
+    email: timothee.giraud@cnrs.fr
+    orcid: https://orcid.org/0000-0002-1932-3323
+  year: '2022'
+  url: https://CRAN.R-project.org/package=mapsf

@@ -1,0 +1,21 @@
+Package: mapiso
+Type: Package
+Title: Create isopleth sf object from raster or regular grids
+Version: 0.1.0
+Authors@R: 
+    person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr", 
+        role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323"))
+Description: Create isopleth sf object from raster or regular grids.
+URL: https://github.com/rcarto/mapiso
+BugReports: https://github.com/rcarto/mapiso/issues/
+Depends: 
+    R (>= 3.6.0)
+Imports: 
+    sf, 
+    terra,
+    isoband
+Suggests: mapsf
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.0
