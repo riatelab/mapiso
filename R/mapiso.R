@@ -141,10 +141,6 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     st_geometry(iso) <- st_collection_extract(st_geometry(iso), "POLYGON")
   }
 
-  if (!missing(mask)) {
-    st_agr(iso) <- "constant"
-    iso <- st_cast(st_intersection(x = iso, y = st_union(st_geometry(mask))))
-  }
 
   if (!missing(mask)) {
     st_agr(iso) <- "constant"
