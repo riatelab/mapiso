@@ -1,3 +1,4 @@
 if (requireNamespace("tinytest", quietly = TRUE)) {
-  tinytest::test_package("mapiso")
+  library(tinytest)
+  test_package("mapiso")
 }
