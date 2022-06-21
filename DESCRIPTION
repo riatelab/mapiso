@@ -16,7 +16,8 @@ Imports:
     isoband
 Suggests: 
     covr,
-    mapsf
+    mapsf, 
+    tinytest
 License: GPL (>= 3)
 Encoding: UTF-8
 RoxygenNote: 7.2.0
