@@ -7,3 +7,4 @@
 ^CITATION\.cff$
 ^codemeta\.json$
 ^\.github$
+^codecov\.yml$

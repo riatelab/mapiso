@@ -14,7 +14,9 @@ Imports:
     sf, 
     terra,
     isoband
-Suggests: mapsf
+Suggests: 
+    covr,
+    mapsf
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
