@@ -9,6 +9,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
+[![R-CMD-check](https://github.com/rCarto/mapiso/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rCarto/mapiso/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of `mapiso` is to create isopleth polygon sf object from raster
