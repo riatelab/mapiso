@@ -10,16 +10,38 @@
 #' @importFrom sf st_union st_intersection st_cast st_agr<- st_coordinates
 #' st_crs st_geometry st_geometry<- st_make_valid st_sf st_sfc
 #' st_collection_extract
-#' @importFrom terra   nlyr values xres yres
 #' @importFrom isoband isobands iso_to_sfg
 #' @return and sf object of iso polygones
 #' @export
-#'
 #' @examples
-#' plot(1:10)
+#' # terra
+#' if(require(terra, quietly = TRUE)){
+#'   r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
+#'   isor <- mapiso(x = r)
+#'   plot(r)
+#'   library(sf)
+#'   plot(st_geometry(isor), add = TRUE, col = NA)
+#' }
+#'
+#' # sf, using a mask
+#' s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+#'              layer = "elevation", quiet = TRUE)
+#' m <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+#'              layer = "com", quiet = TRUE)
+#' isos <- mapiso(x = s, var = "elevation",
+#'                mask = m)
+#' plot(isos)
+#'
+#' # data.frame, using user breaks values
+#' d <- read.csv(system.file("csv/elevation.csv", package = "mapiso"))
+#' bks <-c(98,100, 150, 200, 250, 300, 350, 400, 412.6)
+#' isod <- mapiso(x = d, var = 'elevation',
+#'                breaks = bks, coords = c('x', 'y'), crs = 'epsg:2154')
+#' plot(isod)
+#' if(require(mapsf, quietly = TRUE)){
+#'   mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
+#' }
 mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
-
-
   # test inputs
   if (!inherits(x = x, what = c("SpatRaster", "sf", "data.frame"))) {
     stop(
@@ -29,22 +51,29 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   }
 
   if (inherits(x = x, what = "SpatRaster")) {
-    if (nlyr(x) != 1) {
+    if (!requireNamespace("terra", quietly = TRUE)) {
+      stop(
+        paste0("This function needs the 'terra' package to work with ",
+               "SpatRaster objects. Please install it."),
+        call. = FALSE
+      )
+    }
+    if (terra::nlyr(x) != 1) {
       stop(
         "'x' should be a single layer SpatRaster.",
         call. = FALSE
       )
     }
-    ext <- ext(x)
-    nc <- ncol(x)
-    nr <- nrow(x)
-    xr <- xres(x) / 2
-    yr <- yres(x) / 2
+    ext <- terra::ext(x)
+    nc <- terra::ncol(x)
+    nr <- terra::nrow(x)
+    xr <- terra::xres(x) / 2
+    yr <- terra::yres(x) / 2
     crs <- st_crs(x)
     lon <- seq(ext[1] + xr, ext[2] - xr, length.out = nc)
     lat <- seq(ext[4] - yr, ext[3] + yr, length.out = nr)
     m <- matrix(
-      data = values(x),
+      data = terra::values(x),
       nrow = nr,
       dimnames = list(lat, lon),
       byrow = TRUE
@@ -63,12 +92,6 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     x <- data.frame(st_coordinates(x), var = x[[var]])
     coords <- c("X", "Y")
     var <- "var"
-    if (length(unique(x$X)) * length(unique(x$Y)) != length(x$var)) {
-      stop(
-        "It seems that 'x' is not a regular grid.",
-        call. = FALSE
-      )
-    }
   }
 
 
@@ -82,13 +105,12 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     if (!var %in% names(x)) {
       stop("'var' is not a valid variable of 'x'.", call. = FALSE)
     }
-################################## check grid regularity on dataframe only, not on sf.
-    # if (length(x[[coords[1]]]) * length(x[[coords[2]]]) != length(x[[var]])){
-    #   stop(
-    #     "It seems that 'x' is not a regular grid.",
-    #     call. = FALSE
-    #   )
-    # }
+    if (length(unique(x[[coords[1]]])) * length(unique(x[[coords[2]]])) != length(x[[var]])){
+      stop(
+        "It seems that 'x' is not a regular grid.",
+        call. = FALSE
+      )
+    }
 
     m <- t(
       matrix(
@@ -137,11 +159,11 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   st_geometry(iso) <- st_make_valid(st_geometry(iso))
 
   if (inherits(st_geometry(iso), "sfc_GEOMETRYCOLLECTION") ||
-    inherits(st_geometry(iso), "sfc_GEOMETRY")) {
+      inherits(st_geometry(iso), "sfc_GEOMETRY")) {
     st_geometry(iso) <- st_collection_extract(st_geometry(iso), "POLYGON")
   }
 
-
+  # masl mgmt
   if (!missing(mask)) {
     st_agr(iso) <- "constant"
     if (st_crs(iso) == st_crs(mask)) {

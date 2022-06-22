@@ -28,5 +28,31 @@ and sf object of iso polygones
 Title
 }
 \examples{
-plot(1:10)
+# terra
+if(require(terra, quietly = TRUE)){
+  r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
+  isor <- mapiso(x = r)
+  plot(r)
+  library(sf)
+  plot(st_geometry(isor), add = TRUE, col = NA)
+}
+
+# sf, using a mask
+s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+             layer = "elevation", quiet = TRUE)
+m <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+             layer = "com", quiet = TRUE)
+isos <- mapiso(x = s, var = "elevation",
+               mask = m)
+plot(isos)
+
+# data.frame, using user breaks values
+d <- read.csv(system.file("csv/elevation.csv", package = "mapiso"))
+bks <-c(98,100, 150, 200, 250, 300, 350, 400, 412.6)
+isod <- mapiso(x = d, var = 'elevation',
+               breaks = bks, coords = c('x', 'y'), crs = 'epsg:2154')
+plot(isod)
+if(require(mapsf, quietly = TRUE)){
+  mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
+}
 }

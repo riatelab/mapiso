@@ -12,11 +12,11 @@ Depends:
     R (>= 3.6.0)
 Imports: 
     sf, 
-    terra,
     isoband
 Suggests: 
     covr,
-    mapsf, 
+    mapsf,
+    terra,
     tinytest
 License: GPL (>= 3)
 Encoding: UTF-8
