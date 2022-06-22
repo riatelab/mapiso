@@ -1,21 +1,31 @@
-library(sf)
-library(terra)
+suppressPackageStartupMessages(library(sf))
+
+if(suppressPackageStartupMessages(require(terra, quietly = TRUE))){
+  r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
+  expect_silent(mapiso(x = r))
+  r$coco <- r$elevation +1
+  expect_error(mapiso(r))
+
+}
 
 
-r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
-s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"), quiet = TRUE)
+
+s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+             layer = "elevation", quiet = TRUE)
+m <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+             layer = "com", quiet = TRUE)
 d <- read.csv(system.file("csv/elevation.csv", package = "mapiso"))
 bks <-c(98,100, 150, 200, 250, 300, 350, 400, 412.6)
 
 
 
-expect_silent(mapiso(x = r))
+
+expect_silent(mapiso(x = s, var = "elevation", breaks = bks, mask = m))
 
 expect_silent(mapiso(x = s, var = "elevation", breaks = bks))
 
-expect_silent(mapiso(x = d, var = 'elevation', coords = c('x', 'y'), crs = 'epsg:2154'))
-
-
+expect_silent(mapiso(x = d, var = 'elevation', coords = c('x', 'y'),
+                     crs = 'epsg:2154'))
 
 
 
@@ -23,8 +33,10 @@ expect_silent(mapiso(x = d, var = 'elevation', coords = c('x', 'y'), crs = 'epsg
 # test errors
 
 expect_error(mapiso("textx"))
-r$coco <- r$elevation +1
-expect_error(mapiso(r))
+
+expect_error(mapiso(x = s, var = "elevation", breaks = bks,
+                    mask = st_transform(m, 4326)))
+
 
 expect_error(mapiso(s, var = "nope"))
 

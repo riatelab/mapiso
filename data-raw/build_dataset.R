@@ -11,3 +11,6 @@ write.csv(df, "inst/csv/elevation.csv", row.names = F)
 df <- read.csv("inst/csv/elevation.csv")
 sdf <- sf::st_as_sf(df, coords = c("x", "y"), crs = 2154)
 sf::st_write(sdf, "inst/gpkg/elevation.gpkg", append = FALSE)
+com <- sf::st_read(system.file("gpkg/com.gpkg", package = "tanaka"),
+                   quiet = TRUE)
+sf::st_write(com, "inst/gpkg/elevation.gpkg", layer = "com", append = FALSE)
