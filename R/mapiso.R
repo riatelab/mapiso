@@ -15,7 +15,7 @@
 #' @export
 #' @examples
 #' # terra
-#' if(require(terra, quietly = TRUE)){
+#' if (require(terra, quietly = TRUE)) {
 #'   r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
 #'   isor <- mapiso(x = r)
 #'   plot(r)
@@ -25,20 +25,26 @@
 #'
 #' # sf, using a mask
 #' s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
-#'              layer = "elevation", quiet = TRUE)
+#'   layer = "elevation", quiet = TRUE
+#' )
 #' m <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
-#'              layer = "com", quiet = TRUE)
-#' isos <- mapiso(x = s, var = "elevation",
-#'                mask = m)
+#'   layer = "com", quiet = TRUE
+#' )
+#' isos <- mapiso(
+#'   x = s, var = "elevation",
+#'   mask = m
+#' )
 #' plot(isos)
 #'
 #' # data.frame, using user breaks values
 #' d <- read.csv(system.file("csv/elevation.csv", package = "mapiso"))
-#' bks <-c(98,100, 150, 200, 250, 300, 350, 400, 412.6)
-#' isod <- mapiso(x = d, var = 'elevation',
-#'                breaks = bks, coords = c('x', 'y'), crs = 'epsg:2154')
+#' bks <- c(98, 100, 150, 200, 250, 300, 350, 400, 412.6)
+#' isod <- mapiso(
+#'   x = d, var = "elevation",
+#'   breaks = bks, coords = c("x", "y"), crs = "epsg:2154"
+#' )
 #' plot(isod)
-#' if(require(mapsf, quietly = TRUE)){
+#' if (require(mapsf, quietly = TRUE)) {
 #'   mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
 #' }
 mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
@@ -53,8 +59,10 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   if (inherits(x = x, what = "SpatRaster")) {
     if (!requireNamespace("terra", quietly = TRUE)) {
       stop(
-        paste0("This function needs the 'terra' package to work with ",
-               "SpatRaster objects. Please install it."),
+        paste0(
+          "This function needs the 'terra' package to work with ",
+          "SpatRaster objects. Please install it."
+        ),
         call. = FALSE
       )
     }
@@ -105,7 +113,7 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     if (!var %in% names(x)) {
       stop("'var' is not a valid variable of 'x'.", call. = FALSE)
     }
-    if (length(unique(x[[coords[1]]])) * length(unique(x[[coords[2]]])) != length(x[[var]])){
+    if (length(unique(x[[coords[1]]])) * length(unique(x[[coords[2]]])) != length(x[[var]])) {
       stop(
         "It seems that 'x' is not a regular grid.",
         call. = FALSE
@@ -159,7 +167,7 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   st_geometry(iso) <- st_make_valid(st_geometry(iso))
 
   if (inherits(st_geometry(iso), "sfc_GEOMETRYCOLLECTION") ||
-      inherits(st_geometry(iso), "sfc_GEOMETRY")) {
+    inherits(st_geometry(iso), "sfc_GEOMETRY")) {
     st_geometry(iso) <- st_collection_extract(st_geometry(iso), "POLYGON")
   }
 
