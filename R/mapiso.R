@@ -1,17 +1,24 @@
-#' Title
+#' @title Create Contour Polygons from Regular Grids
+#' @description Regularly spaced grids containing continuous data are
+#' transformed into contour polygons. A grid can be defined by a
+#' data.frame (x, y, value), an \code{sf} object or a \code{terra} SpatRaster.
 #'
-#' @param x a data.frame, an sf data.frame or a SpatRaster.
-#' @param var df and sf only
+#' @param x a data.frame, an sf object or a SpatRaster
+#' @param var name of the variable, for data.frames and sf objects only
 #' @param breaks list of break values (default to equal interval)
-#' @param nbreaks nclass number of classes
-#' @param mask sf object
-#' @param coords df only, vector of names (x and y)
-#' @param crs df only epsg or other code
+#' @param nbreaks number of classes
+#' @param mask an sf object of polygons or multipolygons.
+#' \code{mask} is  used to clip contour polygons
+#' @param coords names of the coordinates variables
+#' (e.g. \code{c("lon", "lat")}), for data.frames only
+#' @param crs CRS code (e.g. "epsg:2154"), for data.frames only.
 #' @importFrom sf st_union st_intersection st_cast st_agr<- st_coordinates
 #' st_crs st_geometry st_geometry<- st_make_valid st_sf st_sfc
 #' st_collection_extract
 #' @importFrom isoband isobands iso_to_sfg
-#' @return and sf object of iso polygones
+#' @return The output is an sf object of polygons. The data frame contains three
+#' fields: id (id of each polygon), isomin and isomax (minimum and maximum
+#' breaks of the polygon).
 #' @export
 #' @examples
 #' # terra

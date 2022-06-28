@@ -2,34 +2,40 @@
 % Please edit documentation in R/mapiso.R
 \name{mapiso}
 \alias{mapiso}
-\title{Title}
+\title{Create Contour Polygons from Regular Grids}
 \usage{
 mapiso(x, var, breaks, nbreaks = 8, mask, coords, crs)
 }
 \arguments{
-\item{x}{a data.frame, an sf data.frame or a SpatRaster.}
+\item{x}{a data.frame, an sf object or a SpatRaster}
 
-\item{var}{df and sf only}
+\item{var}{name of the variable, for data.frames and sf objects only}
 
 \item{breaks}{list of break values (default to equal interval)}
 
-\item{nbreaks}{nclass number of classes}
+\item{nbreaks}{number of classes}
 
-\item{mask}{sf object}
+\item{mask}{an sf object of polygons or multipolygons.
+\code{mask} is  used to clip contour polygons}
 
-\item{coords}{df only, vector of names (x and y)}
+\item{coords}{names of the coordinates variables
+(e.g. \code{c("lon", "lat")}), for data.frames only}
 
-\item{crs}{df only epsg or other code}
+\item{crs}{CRS code (e.g. "epsg:2154"), for data.frames only.}
 }
 \value{
-and sf object of iso polygones
+The output is an sf object of polygons. The data frame contains three
+fields: id (id of each polygon), isomin and isomax (minimum and maximum
+breaks of the polygon).
 }
 \description{
-Title
+Regularly spaced grids containing continuous data are
+transformed into contour polygons. A grid can be defined by a
+data.frame (x, y, value), an \code{sf} object or a \code{terra} SpatRaster.
 }
 \examples{
 # terra
-if(require(terra, quietly = TRUE)){
+if (require(terra, quietly = TRUE)) {
   r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
   isor <- mapiso(x = r)
   plot(r)
@@ -39,20 +45,26 @@ if(require(terra, quietly = TRUE)){
 
 # sf, using a mask
 s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
-             layer = "elevation", quiet = TRUE)
+  layer = "elevation", quiet = TRUE
+)
 m <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
-             layer = "com", quiet = TRUE)
-isos <- mapiso(x = s, var = "elevation",
-               mask = m)
+  layer = "com", quiet = TRUE
+)
+isos <- mapiso(
+  x = s, var = "elevation",
+  mask = m
+)
 plot(isos)
 
 # data.frame, using user breaks values
 d <- read.csv(system.file("csv/elevation.csv", package = "mapiso"))
-bks <-c(98,100, 150, 200, 250, 300, 350, 400, 412.6)
-isod <- mapiso(x = d, var = 'elevation',
-               breaks = bks, coords = c('x', 'y'), crs = 'epsg:2154')
+bks <- c(98, 100, 150, 200, 250, 300, 350, 400, 412.6)
+isod <- mapiso(
+  x = d, var = "elevation",
+  breaks = bks, coords = c("x", "y"), crs = "epsg:2154"
+)
 plot(isod)
-if(require(mapsf, quietly = TRUE)){
+if (require(mapsf, quietly = TRUE)) {
   mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
 }
 }
