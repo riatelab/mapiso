@@ -7,9 +7,11 @@ cff-version: 1.2.0
 message: 'To cite package "mapiso" in publications use:'
 type: software
 license: GPL-3.0-or-later
-title: 'mapiso: Create isopleth sf object from raster or regular grids'
+title: 'mapiso: Create Contour Polygons from Regular Grids'
 version: 0.1.0
-abstract: Create isopleth sf object from raster or regular grids.
+abstract: Regularly spaced grids containing continuous data are transformed to contour
+  polygons. A grid can be defined by a data.frame (x, y, value), an 'sf' object or
+  a 'terra' SpatRaster.
 authors:
 - family-names: Giraud
   given-names: Timothée
@@ -17,16 +19,18 @@ authors:
   orcid: https://orcid.org/0000-0002-1932-3323
 preferred-citation:
   type: manual
-  title: 'mapiso: Create isopleth sf object from raster or regular grids'
+  title: 'mapiso: Create Contour Polygons from Regular Grids'
   authors:
   - family-names: Giraud
     given-names: Timothée
     email: timothee.giraud@cnrs.fr
     orcid: https://orcid.org/0000-0002-1932-3323
   version: 0.1.0
-  abstract: Create isopleth sf object from raster or regular grids.
-  repository-code: https://github.com/rcarto/mapiso/issues/
-  url: https://github.com/rcarto/mapiso
+  abstract: Regularly spaced grids containing continuous data are transformed to contour
+    polygons. A grid can be defined by a data.frame (x, y, value), an 'sf' object
+    or a 'terra' SpatRaster.
+  repository-code: https://github.com/riatelab/mapiso/issues/
+  url: https://github.com/riatelab/mapiso
   contact:
   - family-names: Giraud
     given-names: Timothée
@@ -34,8 +38,8 @@ preferred-citation:
     orcid: https://orcid.org/0000-0002-1932-3323
   license: GPL-3.0-or-later
   year: '2022'
-repository-code: https://github.com/rcarto/mapiso/issues/
-url: https://github.com/rcarto/mapiso
+repository-code: https://github.com/riatelab/mapiso/issues/
+url: https://github.com/riatelab/mapiso
 contact:
 - family-names: Giraud
   given-names: Timothée
@@ -66,17 +70,6 @@ references:
   year: '2022'
   url: https://CRAN.R-project.org/package=sf
 - type: software
-  title: terra
-  abstract: 'terra: Spatial Data Analysis'
-  notes: Imports
-  authors:
-  - family-names: Hijmans
-    given-names: Robert J.
-    email: r.hijmans@gmail.com
-    orcid: https://orcid.org/0000-0001-5872-2872
-  year: '2022'
-  url: https://CRAN.R-project.org/package=terra
-- type: software
   title: isoband
   abstract: 'isoband: Generate Isolines and Isobands from Regularly Spaced Elevation
     Grids'
@@ -93,6 +86,16 @@ references:
   year: '2022'
   url: https://CRAN.R-project.org/package=isoband
 - type: software
+  title: covr
+  abstract: 'covr: Test Coverage for Packages'
+  notes: Suggests
+  authors:
+  - family-names: Hester
+    given-names: Jim
+    email: james.f.hester@gmail.com
+  year: '2022'
+  url: https://CRAN.R-project.org/package=covr
+- type: software
   title: mapsf
   abstract: 'mapsf: Thematic Cartography'
   notes: Suggests
@@ -103,3 +106,25 @@ references:
     orcid: https://orcid.org/0000-0002-1932-3323
   year: '2022'
   url: https://CRAN.R-project.org/package=mapsf
+- type: software
+  title: terra
+  abstract: 'terra: Spatial Data Analysis'
+  notes: Suggests
+  authors:
+  - family-names: Hijmans
+    given-names: Robert J.
+    email: r.hijmans@gmail.com
+    orcid: https://orcid.org/0000-0001-5872-2872
+  year: '2022'
+  url: https://CRAN.R-project.org/package=terra
+- type: software
+  title: tinytest
+  abstract: 'tinytest: Lightweight and Feature Complete Unit Testing Framework'
+  notes: Suggests
+  authors:
+  - family-names: van der Loo
+    given-names: Mark
+    email: mark.vanderloo@gmail.com
+    orcid: https://orcid.org/0000-0002-9807-4686
+  year: '2022'
+  url: https://CRAN.R-project.org/package=tinytest
