@@ -15,3 +15,29 @@ com <- sf::st_read(system.file("gpkg/com.gpkg", package = "tanaka"),
   quiet = TRUE
 )
 sf::st_write(com, "inst/gpkg/elevation.gpkg", layer = "com", append = FALSE)
+
+
+
+## Build logo
+
+library(mapiso)
+library(sf)
+library(mapsf)
+# gridded data
+s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+             layer = "elevation", quiet = TRUE)
+# mask
+m <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
+             layer = "com", quiet = TRUE)
+# custom breaks
+bks <-c(98,100, 150, 200, 250, 300, 350, 400, 412.6)
+isos <- mapiso(x = s, var = "elevation", breaks = bks)
+mf_export(m, "toto.svg")
+mf_map(isos, "isomin", "choro", add = T,
+       breaks = bks, border = NA, leg_pos = NA,
+       leg_title = "elevation", pal  = "Sunset")
+mf_map(s, "elevation", "prop", leg_pos = NA,
+       col = "#ffffff80", inches = .05, border = "#00000050")
+mf_map(isos,add = T, border = "grey30", col = NA, lwd = .5)
+
+dev.off()

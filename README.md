@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mapiso
+# mapiso <img src="man/figures/logo.png" align="right" width="140"/>
 
 <!-- badges: start -->
 
