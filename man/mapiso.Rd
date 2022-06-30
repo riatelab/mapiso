@@ -34,16 +34,8 @@ transformed into contour polygons. A grid can be defined by a
 data.frame (x, y, value), an \code{sf} object or a \code{terra} SpatRaster.
 }
 \examples{
-# terra
-if (require(terra, quietly = TRUE)) {
-  r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
-  isor <- mapiso(x = r)
-  plot(r)
-  library(sf)
-  plot(st_geometry(isor), add = TRUE, col = NA)
-}
-
 # sf, using a mask
+library(sf)
 s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
   layer = "elevation", quiet = TRUE
 )
@@ -67,4 +59,15 @@ plot(isod)
 if (require(mapsf, quietly = TRUE)) {
   mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
 }
+\dontrun{
+# terra
+if (require(terra, quietly = TRUE)) {
+  r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
+  isor <- mapiso(x = r)
+  plot(r)
+  library(sf)
+  plot(st_geometry(isor), add = TRUE, col = NA)
+}
+}
+
 }

@@ -1,13 +1,13 @@
 Package: mapiso
 Type: Package
 Title: Create Contour Polygons from Regular Grids
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr", 
         role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323"))
 Description: Regularly spaced grids containing continuous data are transformed
-    to contour polygons. A grid can be defined by a data.frame (x, y, value), 
-    an 'sf' object or a 'terra' SpatRaster. 
+    to contour polygons. A grid can be defined by a data.frame (x, y, value),
+    an 'sf' object or a raster from 'terra'.
 URL: https://github.com/riatelab/mapiso
 BugReports: https://github.com/riatelab/mapiso/issues/
 Depends: 

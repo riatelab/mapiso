@@ -21,16 +21,8 @@
 #' breaks of the polygon).
 #' @export
 #' @examples
-#' # terra
-#' if (require(terra, quietly = TRUE)) {
-#'   r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
-#'   isor <- mapiso(x = r)
-#'   plot(r)
-#'   library(sf)
-#'   plot(st_geometry(isor), add = TRUE, col = NA)
-#' }
-#'
 #' # sf, using a mask
+#' library(sf)
 #' s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
 #'   layer = "elevation", quiet = TRUE
 #' )
@@ -54,6 +46,17 @@
 #' if (require(mapsf, quietly = TRUE)) {
 #'   mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
 #' }
+#' \dontrun{
+#' # terra
+#' if (require(terra, quietly = TRUE)) {
+#'   r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
+#'   isor <- mapiso(x = r)
+#'   plot(r)
+#'   library(sf)
+#'   plot(st_geometry(isor), add = TRUE, col = NA)
+#' }
+#' }
+#'
 mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   # test inputs
   if (!inherits(x = x, what = c("SpatRaster", "sf", "data.frame"))) {
