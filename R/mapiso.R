@@ -13,8 +13,7 @@
 #' (e.g. \code{c("lon", "lat")}), for data.frames only
 #' @param crs CRS code (e.g. "epsg:2154"), for data.frames only.
 #' @importFrom sf st_union st_intersection st_cast st_agr<- st_coordinates
-#' st_crs st_geometry st_geometry<- st_make_valid st_sf st_sfc
-#' st_collection_extract
+#' st_crs st_geometry st_sf st_sfc
 #' @importFrom isoband isobands iso_to_sfg
 #' @return The output is an sf object of polygons. The data frame contains three
 #' fields: id (id of each polygon), isomin and isomax (minimum and maximum
@@ -154,14 +153,16 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   } else {
     breaks <- sort(unique(c(vmin, breaks[breaks > vmin & breaks < vmax], vmax)))
   }
+
+  # isobanding (+ 1e-10 to avoid invalid polygons)
   lev_low <- breaks[1:(length(breaks) - 1)]
   lev_high <- breaks[2:length(breaks)]
   raw <- isobands(
     x = as.numeric(colnames(m)),
     y = as.numeric(rownames(m)),
-    z = m,
+    z = m + 1e-10,
     levels_low = lev_low,
-    levels_high = c(lev_high[-length(lev_high)], vmax + 1e-10)
+    levels_high = c(lev_high[-length(lev_high)], vmax)
   )
 
   bands <- iso_to_sfg(raw)
@@ -173,15 +174,7 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     crs = crs
   )
 
-  # invalid polygons mgmnt
-  st_geometry(iso) <- st_make_valid(st_geometry(iso))
-
-  if (inherits(st_geometry(iso), "sfc_GEOMETRYCOLLECTION") ||
-    inherits(st_geometry(iso), "sfc_GEOMETRY")) {
-    st_geometry(iso) <- st_collection_extract(st_geometry(iso), "POLYGON")
-  }
-
-  # masl mgmt
+  # mask mgmt
   if (!missing(mask)) {
     st_agr(iso) <- "constant"
     if (st_crs(iso) == st_crs(mask)) {
