@@ -2,18 +2,24 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "mapiso",
-  "description": "Regularly spaced grids containing continuous data are transformed to contour polygons. A grid can be defined by a data.frame (x, y, value), an 'sf' object or a 'terra' SpatRaster. ",
+  "description": "Regularly spaced grids containing continuous data are transformed to contour polygons. A grid can be defined by a data.frame (x, y, value), an 'sf' object or a raster from 'terra'.",
   "name": "mapiso: Create Contour Polygons from Regular Grids",
   "codeRepository": "https://github.com/riatelab/mapiso",
   "issueTracker": "https://github.com/riatelab/mapiso/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -115,7 +121,8 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "1106.239KB",
+  "fileSize": "2352.035KB",
+  "releaseNotes": "https://github.com/riatelab/mapiso/blob/master/NEWS.md",
   "readme": "https://github.com/riatelab/mapiso/blob/main/README.md",
   "contIntegration": ["https://github.com/riatelab/mapiso/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/riatelab/mapiso?branch=main"],
   "developmentStatus": "https://www.repostatus.org/#active"

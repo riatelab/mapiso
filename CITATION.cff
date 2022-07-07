@@ -8,10 +8,10 @@ message: 'To cite package "mapiso" in publications use:'
 type: software
 license: GPL-3.0-or-later
 title: 'mapiso: Create Contour Polygons from Regular Grids'
-version: 0.1.0
+version: 0.1.2
 abstract: Regularly spaced grids containing continuous data are transformed to contour
   polygons. A grid can be defined by a data.frame (x, y, value), an 'sf' object or
-  a 'terra' SpatRaster.
+  a raster from 'terra'.
 authors:
 - family-names: Giraud
   given-names: Timothée
@@ -25,10 +25,11 @@ preferred-citation:
     given-names: Timothée
     email: timothee.giraud@cnrs.fr
     orcid: https://orcid.org/0000-0002-1932-3323
-  version: 0.1.0
+  version: 0.1.2
   abstract: Regularly spaced grids containing continuous data are transformed to contour
     polygons. A grid can be defined by a data.frame (x, y, value), an 'sf' object
-    or a 'terra' SpatRaster.
+    or a raster from 'terra'.
+  repository: https://CRAN.R-project.org/package=mapiso
   repository-code: https://github.com/riatelab/mapiso/issues/
   url: https://github.com/riatelab/mapiso
   contact:
@@ -38,6 +39,7 @@ preferred-citation:
     orcid: https://orcid.org/0000-0002-1932-3323
   license: GPL-3.0-or-later
   year: '2022'
+repository: https://CRAN.R-project.org/package=mapiso
 repository-code: https://github.com/riatelab/mapiso/issues/
 url: https://github.com/riatelab/mapiso
 contact:
