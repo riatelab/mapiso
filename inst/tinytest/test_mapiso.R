@@ -34,7 +34,7 @@ expect_silent(mapiso(x = d, var = 'elevation', coords = c('x', 'y'),
 
 expect_error(mapiso("textx"))
 
-expect_error(mapiso(x = s, var = "elevation", breaks = bks,
+expect_silent(mapiso(x = s, var = "elevation", breaks = bks,
                     mask = st_transform(m, 4326)))
 
 

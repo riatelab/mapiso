@@ -180,9 +180,8 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     if (st_crs(iso) == st_crs(mask)) {
       iso <- st_cast(st_intersection(x = iso, y = st_union(st_geometry(mask))))
     } else {
-      stop(
-        "CRS of 'x' and 'mask' should be identical.",
-        call. = FALSE
+      cat(
+        "CRS of 'x' and 'mask' should be identical, polygons are not clipped."
       )
     }
   }
