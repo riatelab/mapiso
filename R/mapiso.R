@@ -1,19 +1,20 @@
 #' @title Create Contour Polygons from Regular Grids
 #' @description Regularly spaced grids containing continuous data are
 #' transformed into contour polygons. A grid can be defined by a
-#' data.frame (x, y, value), an \code{sf} object or a \code{terra} SpatRaster.
+#' data.frame (x, y, value), an \code{sf} object, a \code{terra} SpatRaster or
+#' SpatVector.
 #'
 #' @param x a data.frame, an sf object or a SpatRaster
 #' @param var name of the variable, for data.frames and sf objects only
 #' @param breaks list of break values (default to equal interval)
 #' @param nbreaks number of classes
-#' @param mask an sf object of polygons or multipolygons.
+#' @param mask an sf object or SpatVector of polygons or multipolygons.
 #' \code{mask} is  used to clip contour polygons
 #' @param coords names of the coordinates variables
 #' (e.g. \code{c("lon", "lat")}), for data.frames only
 #' @param crs CRS code (e.g. "epsg:2154"), for data.frames only.
 #' @importFrom sf st_union st_intersection st_cast st_agr<- st_coordinates
-#' st_crs st_geometry st_sf st_sfc
+#' st_crs st_geometry st_sf st_sfc st_as_sf
 #' @importFrom isoband isobands iso_to_sfg
 #' @return The output is an sf object of polygons. The data frame contains three
 #' fields: id (id of each polygon), isomin and isomax (minimum and maximum
@@ -46,55 +47,73 @@
 #'   mf_map(isod, "isomin", "choro", breaks = bks, leg_title = "Elevation")
 #' }
 #' \dontrun{
-#' # terra
 #' if (require(terra, quietly = TRUE)) {
+#'   # terra SpatRaster
 #'   r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
 #'   isor <- mapiso(x = r)
 #'   plot(r)
-#'   library(sf)
 #'   plot(st_geometry(isor), add = TRUE, col = NA)
+#'   # terra SpatVector
+#'   s_terra <- vect(s)
+#'   m_terra <- vect(m)
+#'   isost <- mapiso(
+#'     x = s_terra, var = "elevation", mask = m_terra
+#'   )
+#'   plot(isost)
 #' }
 #' }
 #'
 mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
   # test inputs
-  if (!inherits(x = x, what = c("SpatRaster", "sf", "data.frame"))) {
+  if (!inherits(x = x, what = c(
+    "SpatRaster", "SpatVector",
+    "sf", "data.frame"
+  ))) {
     stop(
-      "'x' should be a data.frame, an sf data.frame or a SpatRaster.",
+      paste0(
+        "'x' should be a data.frame, an sf data.frame a SpatVector ",
+        "or a SpatRaster."
+      ),
       call. = FALSE
     )
   }
 
-  if (inherits(x = x, what = "SpatRaster")) {
+  if (inherits(x = x, what = c("SpatRaster", "SpatVector"))) {
     if (!requireNamespace("terra", quietly = TRUE)) {
       stop(
         paste0(
           "This function needs the 'terra' package to work with ",
-          "SpatRaster objects. Please install it."
+          "'terra' objects. Please install it."
         ),
         call. = FALSE
       )
     }
-    if (terra::nlyr(x) != 1) {
-      stop(
-        "'x' should be a single layer SpatRaster.",
-        call. = FALSE
+
+    if (inherits(x = x, "SpatVector")) {
+      x <- st_as_sf(x)
+    }
+    if (inherits(x = x, "SpatRaster")) {
+      if (terra::nlyr(x) != 1) {
+        stop(
+          "'x' should be a single layer SpatRaster.",
+          call. = FALSE
+        )
+      }
+      ext <- terra::ext(x)
+      nc <- terra::ncol(x)
+      nr <- terra::nrow(x)
+      xr <- terra::xres(x) / 2
+      yr <- terra::yres(x) / 2
+      crs <- st_crs(x)
+      lon <- seq(ext[1] + xr, ext[2] - xr, length.out = nc)
+      lat <- seq(ext[4] - yr, ext[3] + yr, length.out = nr)
+      m <- matrix(
+        data = terra::values(x),
+        nrow = nr,
+        dimnames = list(lat, lon),
+        byrow = TRUE
       )
     }
-    ext <- terra::ext(x)
-    nc <- terra::ncol(x)
-    nr <- terra::nrow(x)
-    xr <- terra::xres(x) / 2
-    yr <- terra::yres(x) / 2
-    crs <- st_crs(x)
-    lon <- seq(ext[1] + xr, ext[2] - xr, length.out = nc)
-    lat <- seq(ext[4] - yr, ext[3] + yr, length.out = nr)
-    m <- matrix(
-      data = terra::values(x),
-      nrow = nr,
-      dimnames = list(lat, lon),
-      byrow = TRUE
-    )
   }
 
 
@@ -176,6 +195,18 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
 
   # mask mgmt
   if (!missing(mask)) {
+    if (inherits(x = mask, "SpatVector")) {
+      if (!requireNamespace("terra", quietly = TRUE)) {
+        stop(
+          paste0(
+            "This function needs the 'terra' package to work with ",
+            "'terra' objects. Please install it."
+          ),
+          call. = FALSE
+        )
+      }
+      mask <- st_as_sf(mask)
+    }
     st_agr(iso) <- "constant"
     if (st_crs(iso) == st_crs(mask)) {
       iso <- st_cast(st_intersection(x = iso, y = st_union(st_geometry(mask))))
