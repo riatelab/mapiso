@@ -35,4 +35,3 @@ expect_error(mapiso(s[-1, ], var = "elevation"))
 expect_error(mapiso(d))
 expect_error(mapiso(d, var = "elevation"))
 expect_error(mapiso(d, var = "nope", coords = c("x", "y")))
-

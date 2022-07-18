@@ -16,8 +16,9 @@
 #' @importFrom sf st_union st_intersection st_cast st_agr<- st_coordinates
 #' st_crs st_geometry st_sf st_sfc st_as_sf
 #' @importFrom isoband isobands iso_to_sfg
-#' @return The output is an sf object of polygons. The data frame contains three
-#' fields: id (id of each polygon), isomin and isomax (minimum and maximum
+#' @return The output is an sf object of polygons (or a SpatVector if \code{x}
+#' is a SpatVector). The data.frame contains three fields:
+#' id (id of each polygon), isomin and isomax (minimum and maximum
 #' breaks of the polygon).
 #' @export
 #' @examples
@@ -64,6 +65,7 @@
 #' }
 #'
 mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
+  sptvct <- FALSE
   # test inputs
   if (!inherits(x = x, what = c(
     "SpatRaster", "SpatVector",
@@ -88,8 +90,8 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
         call. = FALSE
       )
     }
-
     if (inherits(x = x, "SpatVector")) {
+      sptvct <- TRUE
       x <- st_as_sf(x)
     }
     if (inherits(x = x, "SpatRaster")) {
@@ -215,6 +217,10 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
         "CRS of 'x' and 'mask' should be identical, polygons are not clipped."
       )
     }
+  }
+
+  if (sptvct) {
+    iso <- terra::vect(iso)
   }
 
 
