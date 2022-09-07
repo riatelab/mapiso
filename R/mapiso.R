@@ -150,6 +150,9 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
       )
     }
 
+    # Reorder dataframe by X-Y if needed
+    x <- x[with(x, order(Y, X)),]
+    
     m <- t(
       matrix(
         data = x[[var]],
