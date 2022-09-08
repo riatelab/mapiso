@@ -8,6 +8,7 @@
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN](https://www.r-pkg.org/badges/version/mapiso)](https://cran.r-project.org/package=mapiso)
 [![R-CMD-check](https://github.com/riatelab/mapiso/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/riatelab/mapiso/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/riatelab/mapiso/branch/main/graph/badge.svg)](https://app.codecov.io/gh/riatelab/mapiso?branch=main)
@@ -21,7 +22,15 @@ from `terra`.
 
 ## Installation
 
-You can install the development version of `mapiso` from GitHub with:
+You can install the released version of `mapiso` from
+[CRAN](https://cran.r-project.org/package=mapiso) with:
+
+``` r
+install.packages("mapiso")
+```
+
+Alternatively, you can install the development version of `mapiso` from
+GitHub with:
 
 ``` r
 remotes::install_github("riatelab/mapiso")
@@ -34,7 +43,7 @@ remotes::install_github("riatelab/mapiso")
 ``` r
 library(mapiso)
 library(terra)
-#> terra 1.5.34
+#> terra 1.6.7
 library(mapsf)
 r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
 isor <- mapiso(x = r)
