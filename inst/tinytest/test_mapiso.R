@@ -1,3 +1,4 @@
+library(tinytest)
 suppressPackageStartupMessages(library(sf))
 s <- st_read(system.file("gpkg/elevation.gpkg", package = "mapiso"),
              layer = "elevation", quiet = TRUE)
@@ -28,10 +29,21 @@ expect_silent(mapiso(x = d, var = 'elevation', coords = c('x', 'y'),
 # test errors
 expect_error(mapiso("textx"))
 expect_silent(mapiso(x = s, var = "elevation", breaks = bks,
-                    mask = st_transform(m, 4326)))
+                     mask = st_transform(m, 4326)))
 expect_error(mapiso(s, var = "nope"))
 expect_error(mapiso(s))
 expect_error(mapiso(s[-1, ], var = "elevation"))
 expect_error(mapiso(d))
 expect_error(mapiso(d, var = "elevation"))
 expect_error(mapiso(d, var = "nope", coords = c("x", "y")))
+
+
+expect_equal(mapiso(x = s, var = "elevation", breaks = bks),
+             mapiso(x = s[order(s$elevation), ],
+                    var = "elevation", breaks = bks))
+
+expect_equal(mapiso(x = d, var = 'elevation', coords = c('x', 'y'),
+                    crs = 'epsg:2154'),
+             mapiso(x = d[order(d$elevation), ], var = 'elevation',
+                    coords = c('x', 'y'),
+                    crs = 'epsg:2154'))
