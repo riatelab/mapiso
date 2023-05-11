@@ -1,3 +1,9 @@
+# mapiso 0.2.1
+
+## Fix
+* better min and max values, avoid rounding problems for upper values
+
+
 # mapiso 0.2.0
 
 ## Fix

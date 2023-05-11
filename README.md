@@ -43,7 +43,7 @@ remotes::install_github("riatelab/mapiso")
 ``` r
 library(mapiso)
 library(terra)
-#> terra 1.6.7
+#> terra 1.7.29
 library(mapsf)
 r <- rast(system.file("tif/elevation.tif", package = "mapiso"))
 isor <- mapiso(x = r)

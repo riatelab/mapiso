@@ -178,15 +178,15 @@ mapiso <- function(x, var, breaks, nbreaks = 8, mask, coords, crs) {
     breaks <- sort(unique(c(vmin, breaks[breaks > vmin & breaks < vmax], vmax)))
   }
 
-  # isobanding (+ 1e-10 to avoid invalid polygons)
+  # isobanding
   lev_low <- breaks[1:(length(breaks) - 1)]
   lev_high <- breaks[2:length(breaks)]
   raw <- isobands(
     x = as.numeric(colnames(m)),
     y = as.numeric(rownames(m)),
-    z = m + 1e-10,
-    levels_low = lev_low,
-    levels_high = c(lev_high[-length(lev_high)], vmax)
+    z = m,
+    levels_low = c(vmin - 1, lev_low[-1]),
+    levels_high = c(lev_high[-length(lev_high)], vmax + 1)
   )
 
   bands <- iso_to_sfg(raw)

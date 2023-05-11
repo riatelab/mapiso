@@ -1,7 +1,7 @@
 Package: mapiso
 Type: Package
 Title: Create Contour Polygons from Regular Grids
-Version: 0.2.0.0
+Version: 0.2.1
 Authors@R: 
     person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr", 
         role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323"))
@@ -22,4 +22,4 @@ Suggests:
     tinytest
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
