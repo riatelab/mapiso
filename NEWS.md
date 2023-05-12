@@ -1,4 +1,4 @@
-# mapiso 0.2.1
+# mapiso 0.3.0
 
 ## Fix
 * better min and max values, avoid rounding problems for upper values

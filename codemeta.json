@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/riatelab/mapiso",
   "issueTracker": "https://github.com/riatelab/mapiso/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -121,5 +121,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "2357.954KB"
+  "fileSize": "2357.95KB"
 }
