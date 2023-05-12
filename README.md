@@ -18,7 +18,7 @@ The goal of `mapiso` is to ease the transformation of regularly spaced
 grids containing continuous data into contour polygons. These grids can
 be defined by data.frames (x, y, value), `sf` objects or SpatRasters
 from `terra`.  
-`mapsio` is a wrapper around [`isoband`](https://wilkelab.org/isoband/).
+`mapsio` is a wrapper around [`isoband`](https://isoband.r-lib.org).
 
 ## Installation
 
